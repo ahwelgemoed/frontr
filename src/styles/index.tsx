@@ -4,9 +4,9 @@ export const MainLayout = styled.div`
   display: grid;
   grid-template-columns: 30vw 1fr;
   grid-gap: 20px;
-  background-color: #0a0a0a;
+  background-color: #23252a;
   height: 100vh;
-  padding: 20px;
+  padding: 20px 20px 20px 0px;
   & > div {
     /* padding: 20px; */
   }
@@ -61,4 +61,25 @@ export const PageLayout = styled.div`
   flex-direction: column;
   margin: 0;
   height: 100%;
+`;
+export const CardHeading = styled.h1`
+  font-size: 40px;
+  font-weight: 900;
+  padding: 0;
+  margin: 0;
+  color: #dcdee3;
+`;
+export const CardTwoHeading = styled.h2`
+  font-size: 22px;
+  font-weight: 900;
+  padding: 0;
+  margin: 0;
+  color: #dcdee3;
+`;
+export const CardSubHeading = styled.h3`
+  font-size: 18px;
+  font-weight: 900;
+  padding: 0;
+  margin: 0;
+  color: #5f6166;
 `;

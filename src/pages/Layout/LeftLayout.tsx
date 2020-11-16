@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Menu, { MenuItem } from "rc-menu";
 import { motion } from "framer-motion";
-import { VscTerminal, VscAdd, VscHome } from "react-icons/vsc";
+import { VscTerminal, VscAdd, VscHome, VscCircleSlash } from "react-icons/vsc";
 
 import TerminalComp from "../../components/TerminalComp";
 
@@ -20,7 +20,13 @@ const LeftLayout = () => {
   return (
     <LeftContainer>
       <HeadingImage>
-        <h1>FRONTR</h1>
+        <h1
+          style={{
+            fontWeight: 900,
+          }}
+        >
+          FRONTR
+        </h1>
         <h3>MENDIX FRONTEND APP</h3>
       </HeadingImage>
       <div>
@@ -60,6 +66,19 @@ const LeftLayout = () => {
         )}
         <LeftBottomButtonContainer>
           <h6>Version {packageJson.version}</h6>
+          <button
+            onClick={() => localStorage.removeItem("USER_SETTINGS")}
+            style={{
+              background: "none",
+              border: "none",
+              alignSelf: "baseline",
+              float: "right",
+              width: 55,
+              justifySelf: "flex-end",
+            }}
+          >
+            <VscCircleSlash style={{ fontSize: 16 }} />
+          </button>
           <button
             onClick={() => setToggleTerminal(!toggleTerminal)}
             style={{

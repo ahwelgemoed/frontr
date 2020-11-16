@@ -1,30 +1,30 @@
 import styled from "styled-components";
 
 export const LeftContainer = styled.div`
-  background: #191919;
-  border-radius: 20px;
+  background: #2e3035;
+  border-radius: 0px 20px 20px 0px;
   display: flex;
   flex-direction: column;
 `;
 export const LeftBottomContainer = styled.div`
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 0 20px;
   margin-top: auto;
 `;
 export const LeftBottomButtonContainer = styled.div`
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 20px 0px;
   padding-top: 10px;
   padding-left: 24px;
   background: #363537;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 1fr 1fr;
   align-content: end;
 `;
 export const RightContainer = styled.div`
-  background: #222222;
+  background: #2e3035;
   height: 95vh;
   overflow: scroll;
   border-radius: 20px;
-  padding: 40px;
+  padding: 20px;
 `;
 export const HeadingImage = styled.div`
   padding: 0 20px;

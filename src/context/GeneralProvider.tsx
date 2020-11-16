@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import GeneralContext from "./GeneralContext";
 
 import { QueryProviderProps } from "../typings";
@@ -6,10 +7,18 @@ import { QueryProviderProps } from "../typings";
 const USER_SETTINGS = "user_settings";
 
 const GeneralProvider = ({ children }: QueryProviderProps) => {
+  const { push } = useHistory();
   const [loading, setLoading] = useState<boolean>(true);
   const [firstTime, setFirstTime] = useState<boolean>(true);
   const [nodeAndGulpCheck, setNodeAndGulpCheck] = useState<boolean>(false);
   const [userSettings, setUserSettings] = useState<any>("");
+
+  useEffect(() => {
+    console.log("firstTime", firstTime);
+    if (!firstTime) {
+      return push("/");
+    }
+  }, [firstTime]);
 
   useEffect(() => {
     const start = async () => {
@@ -19,9 +28,7 @@ const GeneralProvider = ({ children }: QueryProviderProps) => {
         console.log(error);
       }
     };
-    // setTimeout(() => {
     start();
-    // }, 5000);
   }, []);
 
   const getLocalSettings = async () => {
@@ -33,6 +40,7 @@ const GeneralProvider = ({ children }: QueryProviderProps) => {
         return;
       }
       const parseUserSettings = await JSON.parse(userSettings);
+      // console.log("parseUserSettings", parseUserSettings);
       if (parseUserSettings) {
         setUserSettings(parseUserSettings);
         setNodeAndGulpCheck(parseUserSettings.nodeAndGulpCheck);
@@ -42,9 +50,23 @@ const GeneralProvider = ({ children }: QueryProviderProps) => {
       }
     } catch (error) {}
   };
-
+  // console.log(
+  //   "userSettings",
+  //   loading,
+  //   firstTime,
+  //   userSettings,
+  //   nodeAndGulpCheck
+  // );
   return (
-    <GeneralContext.Provider value={{ loading, firstTime, userSettings }}>
+    <GeneralContext.Provider
+      value={{
+        loading,
+        firstTime,
+        userSettings,
+        nodeAndGulpCheck,
+        getLocalSettings,
+      }}
+    >
       {children}
     </GeneralContext.Provider>
   );

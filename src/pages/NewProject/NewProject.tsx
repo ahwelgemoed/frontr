@@ -1,5 +1,13 @@
 import React, { useRef, useState } from "react";
-import { PageLayout } from "../../styles";
+import { v4 as uuidv4 } from "uuid";
+
+import {
+  Cards,
+  PageLayout,
+  CardHeading,
+  CardSubHeading,
+  CardTwoHeading,
+} from "../../styles";
 import { Divider, Button, Upload } from "antd";
 
 import { Loading } from "../../components/Loading";
@@ -48,34 +56,65 @@ const NewProject = () => {
       });
       npm.on("close", (code: any) => {
         seLoading(false);
+        console.log("code", code);
         console.log(`child process exited with code ${code}`);
+        if (code == 0) {
+          _saveProject();
+        }
         if (code) {
           setError(true);
         }
       });
     }
   };
+
+  const _saveProject = async () => {
+    await seLoading(true);
+    const SAVED_PROJECTS = "SAVED_PROJECTS";
+    try {
+      let getSaveProjectsParse = [];
+      const getSaveProjects = await localStorage.getItem(SAVED_PROJECTS);
+      if (getSaveProjects) {
+        getSaveProjectsParse = await JSON.parse(getSaveProjects);
+      }
+      const itemToSave = {
+        id: uuidv4(),
+        name: appName,
+        projectPath,
+        date: new Date(),
+      };
+      const itemStringify = await JSON.stringify([
+        ...getSaveProjectsParse,
+        itemToSave,
+      ]);
+
+      await localStorage.setItem(SAVED_PROJECTS, itemStringify);
+      await seLoading(false);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
   //   ./src/utils/package.json"
   const copyFiles = async () => {
-    // console.log("getAppDataPath", getAppDataPath());
+    // console.log("getAppDataPath", getAppDataPath()/resource/package.json);
+    // https://stackoverflow.com/questions/50193870/include-a-folder-and-the-files-inside-it-to-electron-build-using-electron-builde
     if (projectPath) {
       await fs.copyFile(
-        `./src/utils/filestoCopy/package.json`,
+        `${getAppDataPath()}/package.json`,
         PACKAGE_PATH,
         function (err: any) {
           if (err) console.log(err);
           else console.log("Write operation complete.");
         }
       );
-      await fs.copyFile(
-        `./src/utils/filestoCopy/Gulpfile.js`,
-        GULP_PATH,
-        function (err: any, a: any) {
-          console.log("a", a);
-          if (err) console.log(err);
-          else console.log("Write operation complete.");
-        }
-      );
+      await fs.copyFile(`${getAppDataPath()}/Gulpfile.js`, GULP_PATH, function (
+        err: any,
+        a: any
+      ) {
+        console.log("a", a);
+        if (err) console.log(err);
+        else console.log("Write operation complete.");
+      });
       await checkFilesDoneCorrectly();
     }
   };
@@ -100,11 +139,15 @@ const NewProject = () => {
   console.log("appName", appName);
   return (
     <PageLayout>
-      <h1>Lets Setup and Style a New Project</h1>
+      <CardHeading>Add Styling to a Project</CardHeading>
       <Divider />
       <div style={{ display: "grid" }}>
-        <h3>Select The Path to the Projects .MPR File (Root Folder)</h3>
-        <h5>This must be located somewhere on your Windows machine</h5>
+        <CardTwoHeading>
+          Select The Path to the Projects .MPR File (Root Folder)
+        </CardTwoHeading>
+        <CardSubHeading>
+          This must be located somewhere on your Windows machine
+        </CardSubHeading>
         <div
           style={{
             paddingTop: 10,
@@ -119,8 +162,10 @@ const NewProject = () => {
       </div>
       <Divider />
       <div style={{ display: "grid" }}>
-        <h3>Copy Over "HET" Files</h3>
-        <h5>Here we copy and the gulp and package.json over</h5>
+        <CardTwoHeading>Copy Over Files</CardTwoHeading>
+        <CardSubHeading>
+          Here we copy and the gulp and package.json over
+        </CardSubHeading>
         <div>
           <div
             style={{
@@ -145,8 +190,8 @@ const NewProject = () => {
       </div>
       <Divider />
       <div style={{ display: "grid" }}>
-        <h3>Install The Dependencies</h3>
-        <h5>This will take some Time #coffebreak</h5>
+        <CardTwoHeading>Install The Dependencies</CardTwoHeading>
+        <CardSubHeading>This will take some Time #coffebreak</CardSubHeading>
         <div
           style={{
             paddingTop: 10,

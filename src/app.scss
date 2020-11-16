@@ -8,6 +8,7 @@ body {
   margin: 0;
   background-color: white;
   color: #8b888f !important;
+  font-weight: 900;
   overflow: hidden;
 }
 h1,
@@ -17,12 +18,13 @@ h4,
 h5,
 h6,
 p {
-  color: #f1f1f1;
+  color: #f8faf9;
+  font-weight: 900;
 }
 .rc-menu {
   border: none;
   box-shadow: none;
-  color: #8b888f;
+  color: #23252a;
 }
 
 .rc-menu-item,
@@ -37,18 +39,28 @@ p {
   }
 }
 .rc-menu-item-selected {
-  background-color: #212122;
+  background-color: #404349;
+}
+.rc-menu {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: #2e3035 !important;
 }
 .rc-menu-submenu {
   .rc-menu {
-    background-color: #212122 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: #2e3035 !important;
   }
+}
+.rc-menu-item-selected {
+  background-color: #4a4a4a40 !important;
 }
 .rc-menu-item-active,
 .rc-menu-submenu-active {
-  background-color: #212122 !important;
+  background-color: #404349 !important;
   .rc-menu-submenu-title {
-    background-color: #212122 !important;
+    background-color: #404349 !important;
   }
 }
 .rc-steps-item-finish .rc-steps-item-icon {

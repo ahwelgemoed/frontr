@@ -76,7 +76,7 @@ const NodeCheck = () => {
         text="You don't seem to have Node/NPM installed - We can help with that"
       />
       <div>
-        <Divider />
+        {/* <Divider /> */}
         <h1>Do You have Node Installed?</h1>
         <h3>
           The first step is to check if you have NodeJS installed. Click Check

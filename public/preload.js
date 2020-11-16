@@ -14,7 +14,8 @@ function getAppDataPath() {
       );
     }
     case "win32": {
-      return path.join(process.env.APPDATA, "frontr-app");
+      return path.join(process.resourcesPath, "data");
+      // return path.join(process.env.APPDATA, "frontr-app");
     }
     case "linux": {
       return path.join(process.env.HOME, ".frontr-app");
@@ -30,4 +31,4 @@ window.ipcRenderer = ipcRenderer;
 window.child_process = child_process;
 window.fs = fs;
 window.getAppDataPath = getAppDataPath;
-window.saveAppData = saveAppData;
+// window.saveAppData = saveAppData;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
+import "./app.scss";
 import "rc-menu/assets/index.css";
 import "react-toastify/dist/ReactToastify.css";
-import "./app.scss";
 import GeneralProvider from "./context/GeneralProvider";
 import { BrowserRouter as Router } from "react-router-dom";
 

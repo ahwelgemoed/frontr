@@ -1,6 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Steps, Button, Upload } from "antd";
+import GeneralContext from "../../context/GeneralContext";
+
+import { Loading } from "../../components/Loading";
 
 import NodeCheck from "../../components/StylingSetup/Windows/NodeCheck";
 import GulpSelect from "../../components/StylingSetup/Windows/GulpSelect";
@@ -12,13 +15,15 @@ const { fs, getAppDataPath }: any = window;
 
 const FirstTimeSetup = (): React.ReactElement => {
   const { push } = useHistory();
-  const [currentStep, setCurrentStep] = useState(1);
+  const { getLocalSettings } = useContext(GeneralContext);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [loading, seLoading] = useState<any>(false);
   const ref = useRef();
 
   const props = {
     onChange(info: any) {
       if (info.file.status !== "uploading") {
-        console.log(info.file.originFileObj);
+        // console.log(info.file.originFileObj);
       }
     },
   };
@@ -31,11 +36,14 @@ const FirstTimeSetup = (): React.ReactElement => {
   };
   const doneWithSetup = async () => {
     try {
+      await seLoading(true);
       const nodeAndGulpCheck = { nodeAndGulpCheck: true };
       const stringify = await JSON.stringify(nodeAndGulpCheck);
       await localStorage.setItem("USER_SETTINGS", stringify);
-      return await push("/");
-    } catch (error) {}
+      await getLocalSettings();
+    } catch (error) {
+      await seLoading(false);
+    }
   };
 
   const steps = [
@@ -52,43 +60,49 @@ const FirstTimeSetup = (): React.ReactElement => {
         height: "100%",
       }}
     >
-      <Steps current={currentStep}>
-        {steps?.map((step: any, i: number) => {
-          return <Steps.Step key={i} title={step.title} />;
-        })}
-      </Steps>
-      {steps?.map(({ Component }: any, index: number) => {
-        if (currentStep === index) {
-          return <Component />;
-        }
-      })}
-      <div
-        className="steps-action"
-        style={{
-          marginTop: "auto",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr ",
-        }}
-      >
-        <Button
-          ghost
-          style={{ margin: "0 8px", color: "white" }}
-          onClick={() => prev()}
-          disabled={currentStep <= 0}
-        >
-          Previous
-        </Button>
-        {currentStep === steps.length - 1 && (
-          <Button type="primary" onClick={doneWithSetup}>
-            Done
-          </Button>
-        )}
-        {currentStep < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
-          </Button>
-        )}
-      </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <Steps current={currentStep}>
+            {steps?.map((step: any, i: number) => {
+              return <Steps.Step key={i} title={step.title} />;
+            })}
+          </Steps>
+          {steps?.map(({ Component }: any, index: number) => {
+            if (currentStep === index) {
+              return <Component />;
+            }
+          })}
+          <div
+            className="steps-action"
+            style={{
+              marginTop: "auto",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr ",
+            }}
+          >
+            <Button
+              ghost
+              style={{ margin: "0 8px", color: "white" }}
+              onClick={() => prev()}
+              disabled={currentStep <= 0}
+            >
+              Previous
+            </Button>
+            {currentStep === steps.length - 1 && (
+              <Button type="primary" onClick={doneWithSetup}>
+                Done
+              </Button>
+            )}
+            {currentStep < steps.length - 1 && (
+              <Button type="primary" onClick={() => next()}>
+                Next
+              </Button>
+            )}
+          </div>
+        </>
+      )}
 
       {/* <h2>Lets Setup some stuff</h2>
       <Upload {...props} ref={ref}>

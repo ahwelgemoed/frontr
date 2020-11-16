@@ -1,43 +1,101 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import * as R from "ramda";
+import { format } from "date-fns";
 import { useHistory } from "react-router-dom";
 
 import { Loading } from "../../components/Loading";
 import { Divider, Button, Upload } from "antd";
 
-import { Cards, PageLayout } from "../../styles";
+import {
+  Cards,
+  PageLayout,
+  CardHeading,
+  CardSubHeading,
+  CardTwoHeading,
+} from "../../styles";
 
 import GeneralContext from "../../context/GeneralContext";
 
+const propName = R.prop("date");
+const sortOne = R.sortWith([R.descend(propName)]);
 const Home = () => {
   const { push } = useHistory();
-  const { loading, firstTime, userSettings } = useContext(GeneralContext);
+  const [foundProjects, setFoundProjects] = useState([]);
+  const { loading, firstTime, getLocalSettings, nodeAndGulpCheck } = useContext(
+    GeneralContext
+  );
+  useEffect(() => {
+    getLocalSettings();
+    const getSaveProjects = localStorage.getItem("SAVED_PROJECTS");
+    if (getSaveProjects) {
+      const parseProjects = JSON.parse(getSaveProjects);
+      setFoundProjects(sortOne(parseProjects));
+    }
+  }, []);
 
-  // console.log("loading", loading, firstTime, userSettings);
   if (loading) {
     return <Loading />;
   }
-  if (firstTime && !userSettings && !loading) {
+
+  if (firstTime && !loading) {
     setTimeout(() => {
       return push("/firsttimesetup");
     }, 0);
-    // NewProject
-    // return <Loading />;
   }
   return (
     <PageLayout>
-      {/* <Divider /> */}
-      <h1>Welcome</h1>
+      <CardHeading>List of All Projects</CardHeading>
+      <CardSubHeading style={{}}>
+        Here you can setup a new Project
+      </CardSubHeading>
       <Divider />
-      <h3>Choose an Option:</h3>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr ",
+          gridTemplateColumns: "1fr",
+
           gridGap: 20,
         }}
       >
-        <Cards>
-          <h2>Style a New Project</h2>
+        {foundProjects &&
+          foundProjects.map((project) => {
+            return (
+              <>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "3fr 1fr",
+                    alignItems: "center",
+                    gridGap: 20,
+                  }}
+                >
+                  <div>
+                    <CardTwoHeading>{project.name}</CardTwoHeading>
+                    <CardSubHeading>
+                      Path:{" "}
+                      <span style={{ color: "#dcdee3" }}>
+                        {project.projectPath}
+                      </span>
+                    </CardSubHeading>
+                    <CardSubHeading>
+                      Date:{" "}
+                      <span style={{ color: "#dcdee3" }}>
+                        {format(new Date(project.date), "dd/MM/yyyy")}
+                      </span>
+                    </CardSubHeading>
+                  </div>
+                  <Button
+                    type="primary"
+                    onClick={() => push(`/ProjectPage/${project.id}`)}
+                  >
+                    Open
+                  </Button>
+                </div>
+                <Divider />
+              </>
+            );
+          })}
+        {/* <Cards>
           <Button
             type="primary"
             style={{ width: "100%", fontSize: 14 }}
@@ -51,7 +109,7 @@ const Home = () => {
           <Button type="primary" style={{ width: "100%", fontSize: 14 }}>
             Select
           </Button>
-        </Cards>
+        </Cards> */}
       </div>
     </PageLayout>
   );

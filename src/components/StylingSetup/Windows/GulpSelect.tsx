@@ -45,11 +45,6 @@ const GulpSelect = () => {
   };
   return (
     <RightCardBody>
-      {/* <ModalComp
-      openTheModal={error}
-      link="/InstallNode"
-      text="You don't seem to have Node/NPM installed - We can help with that"
-    /> */}
       <div>
         <Divider />
         <h1>Do You have GULP Installed?</h1>
