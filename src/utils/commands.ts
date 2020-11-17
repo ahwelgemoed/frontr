@@ -30,3 +30,22 @@ export const installFilesCommand = async (path: string) => {
     console.log(error);
   }
 };
+export const openMendixCommand = async (filePath: string) => {
+  try {
+    const npm = await child_process.exec(filePath);
+    return npm;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const runDevinProject = async (path: string) => {
+  try {
+    const npm = await child_process.exec("npm run dev", {
+      cwd: path,
+      stdio: "inherit",
+    });
+    return npm;
+  } catch (error) {
+    console.log(error);
+  }
+};

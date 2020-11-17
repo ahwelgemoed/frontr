@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Menu, { MenuItem } from "rc-menu";
 import { motion } from "framer-motion";
 import { VscTerminal, VscAdd, VscHome, VscCircleSlash } from "react-icons/vsc";
@@ -16,18 +16,25 @@ import {
 import packageJson from "../../../package.json";
 
 const LeftLayout = () => {
+  const { push } = useHistory();
   const [toggleTerminal, setToggleTerminal] = useState(true);
   return (
     <LeftContainer>
       <HeadingImage>
+        <img
+          src={"./1024x1024.png"}
+          style={{
+            width: 60,
+          }}
+        />
         <h1
           style={{
-            fontWeight: 900,
+            // fontWeight: 900,
+            fontFamily: "Josefin Sans",
           }}
         >
           FRONTR
         </h1>
-        <h3>MENDIX FRONTEND APP</h3>
       </HeadingImage>
       <div>
         <Menu mode="inline">
@@ -67,7 +74,12 @@ const LeftLayout = () => {
         <LeftBottomButtonContainer>
           <h6>Version {packageJson.version}</h6>
           <button
-            onClick={() => localStorage.removeItem("USER_SETTINGS")}
+            onClick={() => {
+              localStorage.removeItem("USER_SETTINGS");
+              setTimeout(() => {
+                push("/");
+              }, 2000);
+            }}
             style={{
               background: "none",
               border: "none",

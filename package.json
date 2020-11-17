@@ -12,11 +12,11 @@
     "appId": "dev.ahwelgemoed.www",
     "mac": {
       "target": "dmg",
-      "icon": "build/icon.png"
+      "icon": "./public/icons/mac/icon.icns"
     },
     "win": {
       "target": "nsis",
-      "icon": "build/icon.png"
+      "icon": "./public/icons/png/256x256.png"
     }
   },
   "main": "public/electron.js",

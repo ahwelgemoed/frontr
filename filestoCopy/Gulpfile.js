@@ -3,97 +3,114 @@
 */
 
 /* jshint node:true */
-'use strict';
+"use strict";
 
 // What is the name of the style folder in this theme folder?
-var sourceStyleFolder = 'theme/styles';
+var sourceStyleFolder = "theme/styles/web";
 
 // What is the name of the style folder in the deployment folder?
-var deploymentStyleFolder = 'styles';
+var deploymentStyleFolder = "styles/web";
 
 // Browsersync feature, please specify the host & port of the running project (without http://)
-var proxyAddress = 'localhost:8080';
+var proxyAddress = "localhost:8082";
 
 /*
-  *************************************************************************
-  * Don't try to edit below this line, unless you know what you are doing *
-  *************************************************************************/
-var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    browserSync = require('browser-sync').create(),
-    path = require('path'),
-    sourcemaps = require('gulp-sourcemaps');
+ *************************************************************************
+ * Don't try to edit below this line, unless you know what you are doing *
+ *************************************************************************/
+var gulp = require("gulp"),
+  sass = require("gulp-sass"),
+  browserSync = require("browser-sync").create(),
+  path = require("path"),
+  sourcemaps = require("gulp-sourcemaps");
 
-var sourceFolder = './' + sourceStyleFolder + '/',
-    sourceSassFolder = sourceFolder + 'sass/',
-    sourceCssFolder = sourceFolder + 'css/';
+var sourceFolder = "./" + sourceStyleFolder + "/",
+  sourceSassFolder = sourceFolder + "sass/",
+  sourceCssFolder = sourceFolder + "css/";
 
-var deploymentFolder = './deployment/web/' + deploymentStyleFolder,
-    deploymentCssFolder = deploymentFolder + '/css/';
+var deploymentFolder = "./deployment/web/" + deploymentStyleFolder,
+  deploymentCssFolder = deploymentFolder + "/css/";
 
-gulp.task('build-sass', function () {
-  return gulp.src(sourceSassFolder + '**/*.scss')
-    .pipe(sass({
-      outputStyle: 'expanded'
-    }).on('error', sass.logError))
+gulp.task("build-sass", function () {
+  return gulp
+    .src(sourceSassFolder + "**/*.scss")
+    .pipe(
+      sass({
+        outputStyle: "expanded",
+      }).on("error", sass.logError)
+    )
     .pipe(gulp.dest(sourceCssFolder))
     .pipe(gulp.dest(deploymentCssFolder));
 });
 
-gulp.task('build', function () {
-  return gulp.src(sourceSassFolder + '**/*.scss')
-    .pipe(sass({
-      outputStyle: 'compressed'
-    }).on('error', sass.logError))
+gulp.task("build", function () {
+  return gulp
+    .src(sourceSassFolder + "**/*.scss")
+    .pipe(
+      sass({
+        outputStyle: "compressed",
+      }).on("error", sass.logError)
+    )
     .pipe(gulp.dest(sourceCssFolder))
     .pipe(gulp.dest(deploymentCssFolder));
 });
 
-gulp.task('copy-css', function () {
-  return gulp.src(sourceCssFolder + '**/*.css')
+gulp.task("copy-css", function () {
+  return gulp
+    .src(sourceCssFolder + "**/*.css")
     .pipe(gulp.dest(deploymentCssFolder));
 });
 
-gulp.task('watch:sass', function () {
-  gulp.watch('**/*.scss', { cwd: sourceSassFolder }, gulp.series('build-sass'));
+gulp.task("watch:sass", function () {
+  gulp.watch("**/*.scss", { cwd: sourceSassFolder }, gulp.series("build-sass"));
 });
 
-gulp.task('watch:css', function () {
-  gulp.watch('**/*.css', { cwd: sourceCssFolder }, gulp.series('copy-css'));
+gulp.task("watch:css", function () {
+  gulp.watch("**/*.css", { cwd: sourceCssFolder }, gulp.series("copy-css"));
 });
 
-gulp.task('default', gulp.series(['watch:sass']));
-gulp.task('css', gulp.series(['watch:css']));
+gulp.task("default", gulp.series(["watch:sass"]));
+gulp.task("css", gulp.series(["watch:css"]));
 
 // Browsersync
-gulp.task('browsersync-sass', function () {
-  return gulp.src(sourceSassFolder + '**/*.scss')
+gulp.task("browsersync-sass", function () {
+  return gulp
+    .src(sourceSassFolder + "**/*.scss")
     .pipe(sourcemaps.init())
-    .pipe(sass({
-      outputStyle: 'expanded'
-    }).on('error', sass.logError))
+    .pipe(
+      sass({
+        outputStyle: "expanded",
+      }).on("error", sass.logError)
+    )
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(sourceCssFolder))
     .pipe(gulp.dest(deploymentCssFolder))
     .pipe(browserSync.stream());
 });
 
-gulp.task('watch:browsersync-sass', function () {
-  gulp.watch('**/*.scss', { cwd: sourceSassFolder }, gulp.series('browsersync-sass'));
+gulp.task("watch:browsersync-sass", function () {
+  gulp.watch(
+    "**/*.scss",
+    { cwd: sourceSassFolder },
+    gulp.series("browsersync-sass")
+  );
 });
 
-gulp.task('browsersync', function () {
+gulp.task("browsersync", function () {
   browserSync.init({
     proxy: {
       target: proxyAddress,
-      ws: true
+      ws: true,
     },
     online: true,
     open: true,
     reloadOnRestart: true,
     notify: true,
-    ghostMode: false
+    ghostMode: false,
   });
 });
 
-gulp.task('dev', gulp.parallel(['browsersync-sass', 'watch:browsersync-sass', 'browsersync']));
+gulp.task(
+  "dev",
+  gulp.parallel(["browsersync-sass", "watch:browsersync-sass", "browsersync"])
+);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import "./app.scss";
 import "rc-menu/assets/index.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,21 +7,26 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import { MainLayout } from "./styles";
 
-import { LeftLayout, RightLayout } from "./pages";
+import { LeftLayout, RightLayout, Titlebar } from "./pages";
 
 function App() {
-  const ref = useRef(null);
-  useEffect(() => {
-    // console.log("ref", ref);
-  }, [ref]);
-
   return (
     <Router>
       <GeneralProvider>
-        <MainLayout>
-          <LeftLayout />
-          <RightLayout />
-        </MainLayout>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateRows: "10vh, 2fr",
+          }}
+        >
+          <div>
+            <Titlebar />
+          </div>
+          <MainLayout>
+            <LeftLayout />
+            <RightLayout />
+          </MainLayout>
+        </div>
       </GeneralProvider>
     </Router>
   );

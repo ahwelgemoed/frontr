@@ -1,7 +1,6 @@
 const { child_process }: any = window;
 export const cli = () => {
   try {
-    // console.log("spawn", child_process.spawn);
     const ls = child_process.spawn("ls", ["-lh", "/usr"]);
 
     ls.stdout.on("data", (data: any) => {

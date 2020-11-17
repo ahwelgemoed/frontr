@@ -14,7 +14,6 @@ const GeneralProvider = ({ children }: QueryProviderProps) => {
   const [userSettings, setUserSettings] = useState<any>("");
 
   useEffect(() => {
-    console.log("firstTime", firstTime);
     if (!firstTime) {
       return push("/");
     }
@@ -40,7 +39,6 @@ const GeneralProvider = ({ children }: QueryProviderProps) => {
         return;
       }
       const parseUserSettings = await JSON.parse(userSettings);
-      // console.log("parseUserSettings", parseUserSettings);
       if (parseUserSettings) {
         setUserSettings(parseUserSettings);
         setNodeAndGulpCheck(parseUserSettings.nodeAndGulpCheck);
@@ -50,13 +48,7 @@ const GeneralProvider = ({ children }: QueryProviderProps) => {
       }
     } catch (error) {}
   };
-  // console.log(
-  //   "userSettings",
-  //   loading,
-  //   firstTime,
-  //   userSettings,
-  //   nodeAndGulpCheck
-  // );
+
   return (
     <GeneralContext.Provider
       value={{

@@ -23,7 +23,7 @@ const NewProject = () => {
   const [isPackage, setIsPackage] = useState<boolean>();
   const [error, setError] = useState<any>();
   const [appName, setAppName] = useState<any>();
-  const [loading, seLoading] = useState<any>(false);
+  const [loading, setLoading] = useState<any>(false);
 
   const GULP_PATH = `${projectPath}/Gulpfile.js`;
   const PACKAGE_PATH = `${projectPath}/package.json`;
@@ -43,7 +43,7 @@ const NewProject = () => {
     },
   };
   const installFiles = async () => {
-    seLoading(true);
+    setLoading(true);
     let rawReadOut: any = [];
     if (projectPath) {
       const npm = await installFilesCommand(projectPath);
@@ -55,8 +55,7 @@ const NewProject = () => {
         rawReadOut = [...rawReadOut, data.toString()];
       });
       npm.on("close", (code: any) => {
-        seLoading(false);
-        console.log("code", code);
+        setLoading(false);
         console.log(`child process exited with code ${code}`);
         if (code == 0) {
           _saveProject();
@@ -69,7 +68,7 @@ const NewProject = () => {
   };
 
   const _saveProject = async () => {
-    await seLoading(true);
+    await setLoading(true);
     const SAVED_PROJECTS = "SAVED_PROJECTS";
     try {
       let getSaveProjectsParse = [];
@@ -89,14 +88,12 @@ const NewProject = () => {
       ]);
 
       await localStorage.setItem(SAVED_PROJECTS, itemStringify);
-      await seLoading(false);
+      await setLoading(false);
     } catch (error) {
       console.log("Error", error);
     }
   };
-  //   ./src/utils/package.json"
   const copyFiles = async () => {
-    // console.log("getAppDataPath", getAppDataPath()/resource/package.json);
     // https://stackoverflow.com/questions/50193870/include-a-folder-and-the-files-inside-it-to-electron-build-using-electron-builde
     if (projectPath) {
       await fs.copyFile(
@@ -111,7 +108,6 @@ const NewProject = () => {
         err: any,
         a: any
       ) {
-        console.log("a", a);
         if (err) console.log(err);
         else console.log("Write operation complete.");
       });
@@ -136,7 +132,6 @@ const NewProject = () => {
       console.error(err);
     }
   };
-  console.log("appName", appName);
   return (
     <PageLayout>
       <CardHeading>Add Styling to a Project</CardHeading>

@@ -5,7 +5,7 @@ export const MainLayout = styled.div`
   grid-template-columns: 30vw 1fr;
   grid-gap: 20px;
   background-color: #23252a;
-  height: 100vh;
+  height: 95vh;
   padding: 20px 20px 20px 0px;
   & > div {
     /* padding: 20px; */

@@ -7,8 +7,8 @@ const TerminalComp = () => {
       watchConsoleLogging
       hideTopBar={true}
       allowTabs={false}
-      color="green"
-      backgroundColor="black"
+      color="#DCDEE3"
+      backgroundColor="#3B3C41"
       barColor="black"
     />
   );
