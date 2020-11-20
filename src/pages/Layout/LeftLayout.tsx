@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Menu, { MenuItem } from "rc-menu";
 import { motion } from "framer-motion";
 import { VscTerminal, VscAdd, VscHome, VscCircleSlash } from "react-icons/vsc";
+import * as logo from "./1024x1024.png";
 
 import TerminalComp from "../../components/TerminalComp";
 
@@ -22,7 +23,8 @@ const LeftLayout = () => {
     <LeftContainer>
       <HeadingImage>
         <img
-          src={"./1024x1024.png"}
+          //@ts-ignore
+          src={logo}
           style={{
             width: 60,
           }}
