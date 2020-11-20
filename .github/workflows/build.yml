@@ -13,9 +13,13 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
+         env:
+            CI: false
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v2-beta
+         env:
+            CI: false
         with:
           node-version: 12
 
