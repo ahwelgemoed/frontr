@@ -25,6 +25,7 @@ const LeftLayout = () => {
         <img
           //@ts-ignore
           src={logo}
+          alt="Logo"
           style={{
             width: 60,
           }}

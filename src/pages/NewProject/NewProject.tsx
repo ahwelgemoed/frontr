@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import {
-  Cards,
   PageLayout,
   CardHeading,
   CardSubHeading,
@@ -27,7 +26,7 @@ const NewProject = () => {
 
   const GULP_PATH = `${projectPath}/Gulpfile.js`;
   const PACKAGE_PATH = `${projectPath}/package.json`;
-
+  console.log("error", error);
   const props = {
     onChange(info: any) {
       setProjectPath("");
@@ -57,7 +56,7 @@ const NewProject = () => {
       npm.on("close", (code: any) => {
         setLoading(false);
         console.log(`child process exited with code ${code}`);
-        if (code == 0) {
+        if (code === 0) {
           _saveProject();
         }
         if (code) {

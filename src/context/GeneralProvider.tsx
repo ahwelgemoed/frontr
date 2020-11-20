@@ -4,7 +4,7 @@ import GeneralContext from "./GeneralContext";
 
 import { QueryProviderProps } from "../typings";
 
-const USER_SETTINGS = "user_settings";
+// const USER_SETTINGS = "user_settings";
 
 const GeneralProvider = ({ children }: QueryProviderProps) => {
   const { push } = useHistory();

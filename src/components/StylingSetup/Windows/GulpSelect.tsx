@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import ModalComp from "../../Modal";
+import React, { useState } from "react";
 
-import { Divider, Button, Upload } from "antd";
+import { Divider, Button } from "antd";
 import { RightCardBody } from "../../../styles";
 
 import { Loading } from "../../Loading";
@@ -11,7 +10,7 @@ const GulpSelect = () => {
   const [error, setError] = useState<any>();
   const [wasGulpInstalled, setWasGulpInstalled] = useState<boolean>();
   const [loading, seLoading] = useState<any>(false);
-
+  console.log("gulp", gulp, error);
   const checkAndInstallGulp = async () => {
     let rawReadOut: any = [];
     seLoading(true);

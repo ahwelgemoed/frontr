@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
-  Cards,
   PageLayout,
   CardHeading,
   CardSubHeading,
   CardTwoHeading,
 } from "../../styles";
-import { Divider, Button, Upload } from "antd";
+import { Divider, Button } from "antd";
 import { Loading } from "../../components/Loading";
 import { useParams } from "react-router-dom";
 
@@ -18,6 +17,7 @@ const ProjectPage = () => {
   const [runningProject, setRunningProject] = useState();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
+  console.log("error", error);
   useEffect(() => {
     const getSaveProjects = localStorage.getItem("SAVED_PROJECTS");
     if (getSaveProjects && params) {
@@ -31,15 +31,18 @@ const ProjectPage = () => {
 
   const killFiles = () => {
     if (runningProject) {
+      //@ts-ignore
       runningProject?.kill("SIGINT");
       setLoading(false);
+      //@ts-ignore
       setRunningProject("");
     }
   };
   const openMendix = async () => {
     if (foundProject) {
+      //@ts-ignore
       const pathToMPR = `"${foundProject?.projectPath}/${foundProject?.name}.mpr"`;
-      const npm = await openMendixCommand(pathToMPR);
+      await openMendixCommand(pathToMPR);
     }
   };
 
@@ -47,6 +50,7 @@ const ProjectPage = () => {
     setLoading(true);
     let rawReadOut: any = [];
     if (foundProject) {
+      //@ts-ignore
       const npm = await runDevinProject(foundProject?.projectPath);
       setRunningProject(npm);
       npm.stdout.on("data", async function (data: any) {
@@ -62,7 +66,7 @@ const ProjectPage = () => {
       npm.on("close", (code: any) => {
         setLoading(false);
         console.log(`child process exited with code ${code}`);
-        if (code == 0) {
+        if (code === 0) {
           // _saveProject();
         }
         if (code) {
@@ -77,7 +81,9 @@ const ProjectPage = () => {
   if (foundProject) {
     return (
       <PageLayout>
+        {/* @ts-ignore */}
         <CardHeading>Project: {foundProject?.name}</CardHeading>
+        {/* @ts-ignore */}
         <CardSubHeading>Path: {foundProject?.projectPath}</CardSubHeading>
         {loading && <Loading />}
         <Divider />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
 
 const ModalComp = ({ openTheModal, text, link }: any) => {
   const { push } = useHistory();

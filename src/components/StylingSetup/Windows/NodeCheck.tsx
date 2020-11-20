@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ModalComp from "../../Modal";
 
-import { Divider, Button, Upload } from "antd";
+import { Divider, Button } from "antd";
 import { RightCardBody } from "../../../styles";
 
 import { Loading } from "../../Loading";
@@ -10,7 +10,6 @@ import { cli, checkNPMCommand } from "../../../utils/commands";
 const NodeCheck = () => {
   const [nodeVersions, setNodeVersions] = useState<any>();
   const [npmVersions, setNpmVersions] = useState<any>();
-  const [rawReadout, setRawReadout] = useState<any>([]);
   const [error, setError] = useState<any>();
   const [loading, seLoading] = useState<any>(false);
 

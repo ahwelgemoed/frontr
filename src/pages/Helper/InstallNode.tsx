@@ -57,7 +57,7 @@ const InstallNode = () => {
   };
   const checkInstallNode = async () => {
     seLoading(true);
-    const node = await installNode();
+    await installNode();
 
     // node.stdout.on("data", (data: any) => {
     //   console.log(`stdout: ${data}`);

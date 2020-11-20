@@ -1,6 +1,5 @@
-import React, { useRef, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import { Steps, Button, Upload } from "antd";
+import React, { useState, useContext } from "react";
+import { Steps, Button } from "antd";
 import GeneralContext from "../../context/GeneralContext";
 
 import { Loading } from "../../components/Loading";
@@ -8,25 +7,11 @@ import { Loading } from "../../components/Loading";
 import NodeCheck from "../../components/StylingSetup/Windows/NodeCheck";
 import GulpSelect from "../../components/StylingSetup/Windows/GulpSelect";
 
-// import { isMacOs } from "react-device-detect";
-import { cli } from "../../cli";
-
-const { fs, getAppDataPath }: any = window;
-
 const FirstTimeSetup = (): React.ReactElement => {
-  const { push } = useHistory();
   const { getLocalSettings } = useContext(GeneralContext);
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, seLoading] = useState<any>(false);
-  const ref = useRef();
 
-  const props = {
-    onChange(info: any) {
-      if (info.file.status !== "uploading") {
-        // console.log(info.file.originFileObj);
-      }
-    },
-  };
   const next = () => {
     setCurrentStep(currentStep + 1);
   };

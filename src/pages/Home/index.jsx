@@ -4,10 +4,9 @@ import { format } from "date-fns";
 import { useHistory } from "react-router-dom";
 
 import { Loading } from "../../components/Loading";
-import { Divider, Button, Upload } from "antd";
+import { Divider, Button } from "antd";
 
 import {
-  Cards,
   PageLayout,
   CardHeading,
   CardSubHeading,
@@ -21,9 +20,7 @@ const sortOne = R.sortWith([R.descend(propName)]);
 const Home = () => {
   const { push } = useHistory();
   const [foundProjects, setFoundProjects] = useState([]);
-  const { loading, firstTime, getLocalSettings, nodeAndGulpCheck } = useContext(
-    GeneralContext
-  );
+  const { loading, firstTime, getLocalSettings } = useContext(GeneralContext);
   useEffect(() => {
     getLocalSettings();
     const getSaveProjects = localStorage.getItem("SAVED_PROJECTS");

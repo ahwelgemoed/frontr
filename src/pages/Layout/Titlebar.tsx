@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import Menu, { MenuItem } from "rc-menu";
-import { motion } from "framer-motion";
+import React from "react";
 import { VscChromeClose, VscChromeMinimize } from "react-icons/vsc";
 
 import { TitleContainer } from "./styles";
@@ -9,9 +6,6 @@ import { TitleContainer } from "./styles";
 const { electronWindow }: any = window;
 
 const Titlebar = () => {
-  const { push } = useHistory();
-  const [toggleTerminal, setToggleTerminal] = useState(true);
-
   return (
     <TitleContainer>
       <div
