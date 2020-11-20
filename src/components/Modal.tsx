@@ -9,7 +9,7 @@ const ModalComp = ({ openTheModal, text, link }: any) => {
     if (openTheModal) {
       setopenModal(!openModal);
     }
-  }, [openTheModal]);
+  }, [openTheModal, openModal]);
 
   const handleOk = () => {
     setopenModal(false);

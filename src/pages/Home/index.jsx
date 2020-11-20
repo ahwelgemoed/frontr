@@ -21,8 +21,8 @@ const Home = () => {
   const { push } = useHistory();
   const [foundProjects, setFoundProjects] = useState([]);
   const { loading, firstTime, getLocalSettings } = useContext(GeneralContext);
+  getLocalSettings();
   useEffect(() => {
-    getLocalSettings();
     const getSaveProjects = localStorage.getItem("SAVED_PROJECTS");
     if (getSaveProjects) {
       const parseProjects = JSON.parse(getSaveProjects);

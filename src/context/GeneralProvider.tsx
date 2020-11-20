@@ -16,8 +16,10 @@ const GeneralProvider = ({ children }: QueryProviderProps) => {
   useEffect(() => {
     if (!firstTime) {
       return push("/");
+    } else {
+      return;
     }
-  }, [firstTime]);
+  }, [firstTime, push]);
 
   useEffect(() => {
     const start = async () => {

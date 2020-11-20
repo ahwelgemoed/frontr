@@ -20,14 +20,14 @@ const ProjectPage = () => {
   console.log("error", error);
   useEffect(() => {
     const getSaveProjects = localStorage.getItem("SAVED_PROJECTS");
-    if (getSaveProjects && params) {
+    if (getSaveProjects) {
       const getSaveProjectsParse = JSON.parse(getSaveProjects);
       const foundProject = getSaveProjectsParse.find(
         (project: any) => project.id === params?.id
       );
       setFoundProject(foundProject);
     }
-  }, []);
+  }, [params]);
 
   const killFiles = () => {
     if (runningProject) {
