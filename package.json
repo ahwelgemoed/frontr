@@ -3,6 +3,10 @@
   "author": "A.H.Welgemoed",
   "description": "An electron App",
   "build": {
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    },
     "extraResources": [
       {
         "from": "filestoCopy",
